@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #282323;
+  --color-muted: #716a68;
+  --color-paper: #fffdfb;
+  --color-warm: #f8f4f1;
+  --color-rose-pale: #f5e7e8;
+  --color-rose: #d9a4aa;
+  --color-rose-dark: #9c5e68;
+  --color-line: #e8dfdc;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'DM Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-rose-pale);
+  color: var(--color-rose-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+.shine-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.shine-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-150%);
+  background: linear-gradient(110deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.04) 35%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0.04) 65%,
+      transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shine-card:hover::after {
+  animation: card-shine 0.8s ease-in-out;
+}
+
+@keyframes card-shine {
+  to {
+    transform: translateX(150%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-card:hover::after {
+    animation: none;
+  }
+}
