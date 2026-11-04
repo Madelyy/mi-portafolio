@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 
-export type IconName = 'arrow' | 'download' | 'github' | 'linkedin' | 'mail' | 'external' | 'menu' | 'close'
+export type IconName =
+    | 'arrow' | 'download' | 'github' | 'linkedin' | 'mail' | 'external' | 'menu' | 'close'
+    | 'paw' | 'sparkle' | 'copy' | 'check'
 
 export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
     const paths: Record<IconName, ReactNode> = {
@@ -12,6 +14,18 @@ export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
         external: <><path className="stroke-current" d="M15 3h6v6M10 14 21 3" /><path className="stroke-current" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></>,
         menu: <><path className="stroke-current" d="M4 7h16M4 12h16M4 17h16" /></>,
         close: <><path className="stroke-current" d="m6 6 12 12M18 6 6 18" /></>,
+        copy: <><rect className="stroke-current" x="9" y="9" width="11" height="11" rx="2" /><path className="stroke-current" d="M5 15V6a2 2 0 0 1 2-2h9" /></>,
+        check: <path className="stroke-current" d="m5 12.5 4.5 4.5L19 7.5" />,
+        paw: (
+            <g fill="currentColor" stroke="none">
+                <ellipse cx="5" cy="11" rx="1.9" ry="2.5" />
+                <ellipse cx="9" cy="6.8" rx="1.9" ry="2.5" />
+                <ellipse cx="15" cy="6.8" rx="1.9" ry="2.5" />
+                <ellipse cx="19" cy="11" rx="1.9" ry="2.5" />
+                <path d="M12 11.5c-3 0-6 3.6-6 6 0 1.8 1.4 2.6 3 2.6 1.1 0 2-.5 3-.5s1.9.5 3 .5c1.6 0 3-.8 3-2.6 0-2.4-3-6-6-6Z" />
+            </g>
+        ),
+        sparkle: <path fill="currentColor" stroke="none" d="M12 2c.6 4.8 2.2 7.4 8 10-5.8 2.6-7.4 5.2-8 10-.6-4.8-2.2-7.4-8-10 5.8-2.6 7.4-5.2 8-10Z" />,
     }
 
     return (

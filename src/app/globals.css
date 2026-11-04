@@ -1,21 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 @import 'tailwindcss';
 
+/*
+  Regla 60 / 30 / 10
+  60% → neutros cálidos: paper, warm
+  30% → rosa suave: rose-pale, rose, rose-dark
+  10% → acentos: oro (detalles), cielo (nubes y contraste fresco)
+*/
 @theme {
-  --color-ink: #282323;
-  --color-muted: #716a68;
+  --color-ink: #2f2528;
+  --color-cacao: #3b2c32;
+  --color-muted: #6f6568;
   --color-paper: #fffdfb;
-  --color-warm: #f8f4f1;
-  --color-rose-pale: #f5e7e8;
-  --color-rose: #d9a4aa;
+  --color-warm: #faf5f2;
+  --color-rose-pale: #f8e9ea;
+  --color-rose: #e2adb4;
   --color-rose-dark: #9c5e68;
-  --color-line: #e8dfdc;
+  --color-line: #ecdfdd;
+  --color-cielo: #e3eff7;
+  --color-cielo-dark: #47697f;
+  --color-oro: #c9a45c;
+  --color-oro-pale: #f6ecd2;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'DM Sans', sans-serif;
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
 }
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rose) var(--color-warm);
 }
 
 body {
@@ -31,19 +45,228 @@ body {
   color: var(--color-rose-dark);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+:focus-visible {
+  outline: 2px solid var(--color-rose-dark);
+  outline-offset: 3px;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
   }
 
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
+@keyframes float {
 
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-5%);
+  }
+
+  to {
+    transform: translateX(6%);
+  }
+}
+
+@keyframes wag {
+
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+
+  50% {
+    transform: rotate(16deg);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  96% {
+    transform: scaleY(.08);
+  }
+}
+
+@keyframes roll {
+
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+
+  50% {
+    transform: translateX(110px) rotate(300deg);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: .2;
+    transform: scale(.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes giro {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Utilidades de animación ---------- */
+.anim-in {
+  animation: rise .9s cubic-bezier(.2, .7, .2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.anim-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.anim-drift {
+  animation: drift 16s ease-in-out infinite alternate;
+}
+
+.anim-wag {
+  animation: wag 1.9s ease-in-out infinite;
+}
+
+.anim-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5s infinite;
+}
+
+.anim-roll {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: roll 4.6s ease-in-out infinite;
+}
+
+.anim-twinkle {
+  animation: twinkle 3.2s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+.anim-pop {
+  animation: pop .35s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.anim-giro {
+  animation: giro 24s linear infinite;
+}
+
+/* Aparición al hacer scroll (componente Reveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Marquee del footer */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 34s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Regla del gatito (scroll lateral): marcas largas cada 60px y cortas cada 12px */
+.regla {
+  background-image:
+    repeating-linear-gradient(to bottom, var(--color-rose-dark) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(to bottom, var(--color-rose-dark) 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(to bottom, var(--color-rose) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(to bottom, var(--color-rose) 0 1px, transparent 1px 12px);
+  background-size: 8px 100%, 8px 100%, 4px 100%, 4px 100%;
+  background-position: left top, right top, left top, right top;
+  background-repeat: no-repeat;
+}
+
+/* Washi tape */
+.tape {
+  background: repeating-linear-gradient(45deg, rgba(201, 164, 92, .38) 0 6px, rgba(255, 255, 255, .45) 6px 12px);
+  box-shadow: 0 2px 6px rgba(156, 94, 104, .12);
+}
+
+/* Modal de contacto (<dialog>) */
+dialog.modal-gato {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  overflow: visible;
+  width: min(480px, calc(100vw - 32px));
+  max-height: none;
+}
+
+dialog.modal-gato[open] {
+  animation: pop .4s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+dialog.modal-gato::backdrop {
+  background: rgba(59, 44, 50, .42);
+  backdrop-filter: blur(6px);
+}
+
+/* Brillo en tarjetas */
 .shine-card {
   position: relative;
   isolation: isolate;
@@ -54,18 +277,13 @@ body {
   position: absolute;
   inset: 0;
   transform: translateX(-150%);
-  background: linear-gradient(110deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.04) 35%,
-      rgba(255, 255, 255, 0.35) 50%,
-      rgba(255, 255, 255, 0.04) 65%,
-      transparent 80%);
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, .04) 35%, rgba(255, 255, 255, .35) 50%, rgba(255, 255, 255, .04) 65%, transparent 80%);
   pointer-events: none;
   z-index: 1;
 }
 
 .shine-card:hover::after {
-  animation: card-shine 0.8s ease-in-out;
+  animation: card-shine .8s ease-in-out;
 }
 
 @keyframes card-shine {
@@ -74,8 +292,39 @@ body {
   }
 }
 
+/* Respetar "reducir movimiento" */
 @media (prefers-reduced-motion: reduce) {
-  .shine-card:hover::after {
-    animation: none;
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+  }
+
+  .anim-in,
+  .anim-float,
+  .anim-drift,
+  .anim-wag,
+  .anim-blink,
+  .anim-roll,
+  .anim-twinkle,
+  .anim-pop,
+  .anim-giro,
+  .marquee-track,
+  .shine-card:hover::after,
+  dialog.modal-gato[open] {
+    animation: none !important;
+  }
+
+  .anim-in {
+    opacity: 1;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

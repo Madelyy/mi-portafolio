@@ -12,7 +12,7 @@ export const proyectos = [
             "HTML5",
             "CSS3",
         ],
-        imagen: '/images/albatros-asociados.vercel.app.jpg',
+        imagen: '/images/albatros-asociados.vercel.app_.png',
         alt: "Interfaz de la página web corporativa de Albatros Asociados",
         tone: "blue",
         demo: "https://albatros-asociados.vercel.app/"

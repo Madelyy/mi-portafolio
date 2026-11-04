@@ -18,12 +18,11 @@ export function Seccion({
     contenedorClassName = "",
     children,
     ...props
-}: (
-    SeccionProps
-)) {
+}: SeccionProps) {
     return (
-        <section className={`scroll mt-[72px] md:scroll-mt-[84px] ${className}`} {...props}>
-            <Contenedor className={`py-[clamp(64px,10vw,200px)] ${contenedorClassName}`}>
+        /* scroll-mt compensa el header flotante; antes "scroll" + mt-[72px] sumaban un hueco de 72px entre secciones */
+        <section className={`relative scroll-mt-20 ${className}`} {...props}>
+            <Contenedor className={`py-[clamp(64px,9vw,140px)] ${contenedorClassName}`}>
                 {children}
             </Contenedor>
         </section>
